@@ -4,9 +4,14 @@ app for recording and visualizing audio.
 
 usage:
 
-  ./record-audio.py [option] [file]
+  ./record-audio.py [option] [args]
 
 options:
 
-  - r : record audio until '^c' is pressed
-  - v : visualize audio file
+  - r [output_file] [duration_in_seconds]
+
+      record audio and save it to a file
+
+  - v [input_file]
+
+      visualize audio file
