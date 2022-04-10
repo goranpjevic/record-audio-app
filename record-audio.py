@@ -39,13 +39,12 @@ def visualize(filename):
     plt.show()
 
 def main():
-    args = sys.argv
-    if (len(args) < 2):
+    if (len(sys.argv) < 2):
         print("no option specified")
-    elif (args[1] == "r"):
-        record(args[2])
-    elif (args[1] == "v"):
-        visualize(args[2])
+    elif (sys.argv[1] == "r"):
+        record(sys.argv[2])
+    elif (sys.argv[1] == "v"):
+        visualize(sys.argv[2])
     else:
         print("invalid option")
 
