@@ -1,3 +1,12 @@
                                 record-audio-app
 
 app for recording and visualizing audio.
+
+usage:
+
+  ./record-audio.py [option] [file]
+
+options:
+
+  - r : record audio until '^c' is pressed
+  - v : visualize audio file
