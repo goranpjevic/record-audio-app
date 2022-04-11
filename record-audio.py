@@ -43,7 +43,6 @@ def visualize(filename):
     T = N/frame_rate
     freq = n/T
 
-
     figure, axis = plt.subplots(2)
     axis[0].plot(time_interval, audio_read)
     axis[0].set_ylabel("amplitude")
