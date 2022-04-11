@@ -7,6 +7,8 @@ import pyaudio
 import wave
 
 from scipy.io.wavfile import read
+import numpy as np
+from numpy.fft import fft
 import matplotlib.pyplot as plt
 
 def record(filename, duration):
@@ -31,10 +33,25 @@ def visualize(filename):
     plt.rcParams["figure.figsize"] = [7.50, 3.50]
     plt.rcParams["figure.autolayout"] = True
     input_data = read(filename)
+    frame_rate = input_data[0]
     audio_read = input_data[1]
-    plt.plot(audio_read)
-    plt.ylabel("Amplitude")
-    plt.xlabel("Time")
+    time_interval = np.arange(0,audio_read.size/frame_rate,1/frame_rate)
+
+    audio_dft = fft(audio_read)
+    N = len(audio_dft)
+    n = np.arange(N)
+    T = N/frame_rate
+    freq = n/T
+
+
+    figure, axis = plt.subplots(2)
+    axis[0].plot(time_interval, audio_read)
+    axis[0].set_ylabel("amplitude")
+    axis[0].set_xlabel("time [s]")
+    axis[1].stem(freq, np.abs(audio_dft), linefmt='b', markerfmt=" ", basefmt="-b")
+    #axis[1].plot(audio_dft)
+    axis[1].set_ylabel("fft amplitude |x(freq)|")
+    axis[1].set_xlabel("frequency [Hz]")
     plt.show()
 
 def main():
