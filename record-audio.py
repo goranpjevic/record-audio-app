@@ -54,14 +54,13 @@ def visualize(filename):
     plt.show()
 
 def main():
-    if (len(sys.argv) < 2):
-        print("no option specified")
-    elif (sys.argv[1] == "r"):
-        record(sys.argv[2], float(sys.argv[3]))
-    elif (sys.argv[1] == "v"):
-        visualize(sys.argv[2])
-    else:
-        print("invalid option")
+    try:
+        if (sys.argv[1] == "r"):
+            record(sys.argv[2], float(sys.argv[3]))
+        elif (sys.argv[1] == "v"):
+            visualize(sys.argv[2])
+    except:
+        print("invalid arguments")
 
 if __name__ == "__main__":
     main()
