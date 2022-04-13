@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import sys
+import argparse
 
 from datetime import datetime
 import pyaudio
@@ -54,13 +54,17 @@ def visualize(filename):
     plt.show()
 
 def main():
-    try:
-        if (sys.argv[1] == "r"):
-            record(sys.argv[2], float(sys.argv[3]))
-        elif (sys.argv[1] == "v"):
-            visualize(sys.argv[2])
-    except:
-        print("invalid arguments")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-r", "--record", help="record audio and save it to a file", type=str)
+    parser.add_argument("-d", "--duration", help="duration of the recording in seconds", type=float)
+    parser.add_argument("-v", "--visualize", help="visualize audio file", type=str)
+    args = parser.parse_args()
+    if (args.record != None and args.duration != None):
+        record(args.record, args.duration)
+    elif (args.visualize != None):
+        visualize(args.visualize)
+    else:
+        parser.print_help()
 
 if __name__ == "__main__":
     main()

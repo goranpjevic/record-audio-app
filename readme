@@ -2,16 +2,13 @@
 
 app for recording and visualizing audio.
 
-usage:
+usage: record-audio.py [-h] [-r RECORD] [-d DURATION] [-v VISUALIZE]
 
-  ./record-audio.py [option] [args]
-
-options:
-
-  - r [output_file] [duration_in_seconds]
-
-      record audio and save it to a file
-
-  - v [input_file]
-
-      visualize audio file
+optional arguments:
+  -h, --help            show this help message and exit
+  -r RECORD, --record RECORD
+                        record audio and save it to a file
+  -d DURATION, --duration DURATION
+                        duration of the recording in seconds
+  -v VISUALIZE, --visualize VISUALIZE
+                        visualize audio file
