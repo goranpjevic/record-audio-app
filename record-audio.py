@@ -30,14 +30,14 @@ def record(filename, duration):
     sound_file.close()
 
 def visualize(filename):
-    plt.rcParams["figure.figsize"] = [7.50, 3.50]
-    plt.rcParams["figure.autolayout"] = True
     frame_rate, audio_read = read(filename)
     time_interval = np.arange(0,audio_read.size/frame_rate,1/frame_rate)
 
     audio_dft = fft(audio_read)
     freq = np.arange(0, frame_rate, frame_rate/len(audio_dft))
 
+    plt.rcParams["figure.figsize"] = [7.50, 3.50]
+    plt.rcParams["figure.autolayout"] = True
     figure, axis = plt.subplots(2)
     axis[0].plot(time_interval, audio_read)
     axis[0].set_title("input sound")
