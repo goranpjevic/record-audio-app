@@ -3,6 +3,7 @@
 app for recording and visualizing audio.
 
 usage: record-audio.py [-h] [-r RECORD] [-d DURATION] [-v VISUALIZE]
+                       [-s SIN_FREQUENCY]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -12,3 +13,5 @@ optional arguments:
                         duration of the recording in seconds
   -v VISUALIZE, --visualize VISUALIZE
                         visualize audio file
+  -s SIN_FREQUENCY, --sin-frequency SIN_FREQUENCY
+                        frequency of the sinusoid
