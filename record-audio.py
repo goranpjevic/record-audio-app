@@ -51,10 +51,10 @@ def visualize(filename, sin_frequency):
     axis[1].set_ylabel("fft amplitude |x(freq)|")
     axis[1].set_xlabel("frequency [Hz]")
     axis[2].plot(time_interval, sinusoid)
-    axis[2].set_title("sinusoid with frequency " + str(sin_frequency))
+    axis[2].set_title("sinusoid with frequency " + str(sin_frequency) +
+            "\nscalar product with input sound = " + str(scalar_product))
     axis[2].set_ylabel("amplitude")
     axis[2].set_xlabel("time [s]")
-    figure.suptitle("scalar product with input sound = " + str(scalar_product))
     plt.show()
 
 def main():
