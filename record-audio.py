@@ -32,9 +32,7 @@ def record(filename, duration):
 def visualize(filename):
     plt.rcParams["figure.figsize"] = [7.50, 3.50]
     plt.rcParams["figure.autolayout"] = True
-    input_data = read(filename)
-    frame_rate = input_data[0]
-    audio_read = input_data[1]
+    frame_rate, audio_read = read(filename)
     time_interval = np.arange(0,audio_read.size/frame_rate,1/frame_rate)
 
     audio_dft = fft(audio_read)
