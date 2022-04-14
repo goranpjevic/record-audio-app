@@ -60,11 +60,11 @@ def visualize(filename, sin_frequency):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-r", "--record", help="record audio and save it to a file", type=str)
-    parser.add_argument("-d", "--duration", help="duration of the recording in seconds", type=float)
+    parser.add_argument("-d", "--duration", help="duration of the recording in seconds", default=5, type=float)
     parser.add_argument("-v", "--visualize", help="visualize audio file", type=str)
     parser.add_argument("-s", "--sin-frequency", help="frequency of the sinusoid", default=1, type=float)
     args = parser.parse_args()
-    if (args.record != None and args.duration != None):
+    if (args.record != None):
         record(args.record, args.duration)
     elif (args.visualize != None):
         visualize(args.visualize, args.sin_frequency)
