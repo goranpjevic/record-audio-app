@@ -29,14 +29,13 @@ def record(filename, duration):
     sound_file.writeframes(b''.join(frames))
     sound_file.close()
 
-def visualize(filename):
+def visualize(filename, sin_frequency):
     frame_rate, audio_read = read(filename)
     time_interval = np.arange(0,audio_read.size/frame_rate,1/frame_rate)
 
     audio_dft = fft(audio_read)
     freq = np.arange(0, frame_rate, frame_rate/len(audio_dft))
 
-    sin_frequency = 1
     sinusoid = np.sin(2*np.pi*sin_frequency*time_interval)
     scalar_product = np.dot(audio_read, sinusoid)
 
@@ -63,11 +62,12 @@ def main():
     parser.add_argument("-r", "--record", help="record audio and save it to a file", type=str)
     parser.add_argument("-d", "--duration", help="duration of the recording in seconds", type=float)
     parser.add_argument("-v", "--visualize", help="visualize audio file", type=str)
+    parser.add_argument("-s", "--sin-frequency", help="frequency of the sinusoid", default=1, type=float)
     args = parser.parse_args()
     if (args.record != None and args.duration != None):
         record(args.record, args.duration)
     elif (args.visualize != None):
-        visualize(args.visualize)
+        visualize(args.visualize, args.sin_frequency)
     else:
         parser.print_help()
 
