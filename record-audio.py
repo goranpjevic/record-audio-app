@@ -36,9 +36,13 @@ def visualize(filename):
     audio_dft = fft(audio_read)
     freq = np.arange(0, frame_rate, frame_rate/len(audio_dft))
 
-    plt.rcParams["figure.figsize"] = [7.50, 3.50]
+    sin_frequency = 1
+    sinusoid = np.sin(2*np.pi*sin_frequency*time_interval)
+    scalar_product = np.dot(audio_read, sinusoid)
+
+    plt.rcParams["figure.figsize"] = [7.50, 5.50]
     plt.rcParams["figure.autolayout"] = True
-    figure, axis = plt.subplots(2)
+    figure, axis = plt.subplots(3)
     axis[0].plot(time_interval, audio_read)
     axis[0].set_title("input sound")
     axis[0].set_ylabel("amplitude")
@@ -47,6 +51,11 @@ def visualize(filename):
     axis[1].set_title("dft(input sound)")
     axis[1].set_ylabel("fft amplitude |x(freq)|")
     axis[1].set_xlabel("frequency [Hz]")
+    axis[2].plot(time_interval, sinusoid)
+    axis[2].set_title("sinusoid with frequency " + str(sin_frequency))
+    axis[2].set_ylabel("amplitude")
+    axis[2].set_xlabel("time [s]")
+    figure.suptitle("scalar product with input sound = " + str(scalar_product))
     plt.show()
 
 def main():
