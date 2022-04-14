@@ -45,10 +45,12 @@ def visualize(filename):
 
     figure, axis = plt.subplots(2)
     axis[0].plot(time_interval, audio_read)
+    axis[0].set_title("input sound")
     axis[0].set_ylabel("amplitude")
     axis[0].set_xlabel("time [s]")
     axis[1].stem(freq, np.abs(audio_dft), linefmt='b', markerfmt=" ", basefmt="-b")
     #axis[1].plot(audio_dft)
+    axis[1].set_title("dft(input sound)")
     axis[1].set_ylabel("fft amplitude |x(freq)|")
     axis[1].set_xlabel("frequency [Hz]")
     plt.show()
