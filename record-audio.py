@@ -38,10 +38,7 @@ def visualize(filename):
     time_interval = np.arange(0,audio_read.size/frame_rate,1/frame_rate)
 
     audio_dft = fft(audio_read)
-    N = len(audio_dft)
-    n = np.arange(N)
-    T = N/frame_rate
-    freq = n/T
+    freq = np.arange(0, frame_rate, frame_rate/len(audio_dft))
 
     figure, axis = plt.subplots(2)
     axis[0].plot(time_interval, audio_read)
