@@ -44,7 +44,6 @@ def visualize(filename, sin_frequency, window_length, overlap):
     plt.rcParams["figure.figsize"] = [15, 8]
     plt.rcParams["figure.autolayout"] = True
     figure = plt.figure()
-    #figure, gs = plt.subplots(3, 2, gridspec_kw={'height_ratios': [5, 5, 1]})
     gs = gridspec.GridSpec(4, 2, height_ratios=[5, 5, 1, 1])
 
     plt.subplot(gs[0,0]).plot(time_interval, audio_read)
@@ -81,7 +80,6 @@ def visualize(filename, sin_frequency, window_length, overlap):
         plt.subplot(gs[0,1]).set_title("sinusoid with frequency " + str(freq_slider.val) +
             "\nscalar product with input sound = " + str(scalar_product))
 
-    #axfreq = plt.axes([0.25, 0.1, 0.65, 0.03])
     window_length_slider = Slider(
         ax=plt.subplot(gs[2,0]),
         label="stdft window length [s]",
@@ -106,8 +104,6 @@ def visualize(filename, sin_frequency, window_length, overlap):
     window_length_slider.on_changed(update_spectrogram)
     overlap_slider.on_changed(update_spectrogram)
     freq_slider.on_changed(update_sinusoid)
-
-    #figure.delaxes(gs[3,1])
 
     plt.show()
 
