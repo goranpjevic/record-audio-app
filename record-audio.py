@@ -31,7 +31,7 @@ def record(filename, duration):
     sound_file.writeframes(b''.join(frames))
     sound_file.close()
 
-def visualize(filename, sin_frequency, window_length, overlap):
+def visualize(filename, sin_frequency, amplitude, window_length, overlap):
     frame_rate, audio_read = read(filename)
     time_interval = np.arange(0,audio_read.size/frame_rate,1/frame_rate)
 
@@ -39,7 +39,7 @@ def visualize(filename, sin_frequency, window_length, overlap):
     freq = np.arange(0, frame_rate, frame_rate/len(audio_dft))
 
     sinusoid = np.sin(2*np.pi*sin_frequency*time_interval)
-    scalar_product = np.dot(audio_read, sinusoid)
+    scalar_product = amplitude * np.dot(audio_read, sinusoid)
 
     plt.rcParams["figure.figsize"] = [15, 8]
     plt.rcParams["figure.autolayout"] = True
@@ -57,8 +57,8 @@ def visualize(filename, sin_frequency, window_length, overlap):
     plt.subplot(gs[1,0]).set_xlabel("frequency [Hz]")
 
     sin_line, = plt.subplot(gs[0,1]).plot(time_interval, sinusoid)
-    plt.subplot(gs[0,1]).set_title("sinusoid with frequency " + str(sin_frequency) + " Hz\n"
-            "scalar product with input sound = " + str(scalar_product))
+    plt.subplot(gs[0,1]).set_title("sinusoid with frequency " + str(sin_frequency) + " Hz and amplitude " + str(amplitude) +
+            "\nscalar product with input sound = " + str(scalar_product))
     plt.subplot(gs[0,1]).set_ylabel("amplitude")
     plt.subplot(gs[0,1]).set_xlabel("time [s]")
 
@@ -77,8 +77,8 @@ def visualize(filename, sin_frequency, window_length, overlap):
         sinusoid = np.sin(2*np.pi*freq_slider.val*time_interval)
         scalar_product = np.dot(audio_read, sinusoid)
         sin_line.set_ydata(sinusoid)
-        plt.subplot(gs[0,1]).set_title("sinusoid with frequency " + str(freq_slider.val) + " Hz\n"
-            "scalar product with input sound = " + str(scalar_product))
+        plt.subplot(gs[0,1]).set_title("sinusoid with frequency " + str(freq_slider.val) + " Hz and amplitude " + str(amplitude) +
+            "\nscalar product with input sound = " + str(scalar_product))
 
     window_length_slider = Slider(
         ax=plt.subplot(gs[2,0]),
@@ -113,13 +113,14 @@ def main():
     parser.add_argument("-d", "--duration", help="duration of the recording in seconds", default=5, type=float)
     parser.add_argument("-v", "--visualize", help="visualize audio file", type=str)
     parser.add_argument("-s", "--sin-frequency", help="frequency of the sinusoid", default=1, type=float)
+    parser.add_argument("-a", "--amplitude", help="amplitude of the sinusoid", default=1, type=float)
     parser.add_argument("-w", "--window-length", help="window length in seconds for the stdft", default=0.1, type=float)
     parser.add_argument("-o", "--overlap", help="window proportion overlap for the stdft", default=0, type=float)
     args = parser.parse_args()
     if (args.record != None):
         record(args.record, args.duration)
     elif (args.visualize != None):
-        visualize(args.visualize, args.sin_frequency, args.window_length, args.overlap)
+        visualize(args.visualize, args.sin_frequency, args.amplitude, args.window_length, args.overlap)
     else:
         parser.print_help()
 
