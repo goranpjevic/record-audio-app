@@ -10,6 +10,8 @@ from scipy.io.wavfile import read
 import numpy as np
 from numpy.fft import fft
 import matplotlib.pyplot as plt
+from matplotlib.widgets import Slider
+from matplotlib import gridspec
 
 def record(filename, duration):
     audio = pyaudio.PyAudio()
@@ -41,24 +43,72 @@ def visualize(filename, sin_frequency, window_length, overlap):
 
     plt.rcParams["figure.figsize"] = [15, 8]
     plt.rcParams["figure.autolayout"] = True
-    figure, axis = plt.subplots(2, 2)
-    axis[0,0].plot(time_interval, audio_read)
-    axis[0,0].set_title("input sound")
-    axis[0,0].set_ylabel("amplitude")
-    axis[0,0].set_xlabel("time [s]")
-    axis[1,0].plot(freq, np.abs(audio_dft))
-    axis[1,0].set_title("dft(input sound)")
-    axis[1,0].set_ylabel("fft amplitude |x(freq)|")
-    axis[1,0].set_xlabel("frequency [Hz]")
-    axis[0,1].plot(time_interval, sinusoid)
-    axis[0,1].set_title("sinusoid with frequency " + str(sin_frequency) +
+    figure = plt.figure()
+    #figure, gs = plt.subplots(3, 2, gridspec_kw={'height_ratios': [5, 5, 1]})
+    gs = gridspec.GridSpec(4, 2, height_ratios=[5, 5, 1, 1])
+
+    plt.subplot(gs[0,0]).plot(time_interval, audio_read)
+    plt.subplot(gs[0,0]).set_title("input sound")
+    plt.subplot(gs[0,0]).set_ylabel("amplitude")
+    plt.subplot(gs[0,0]).set_xlabel("time [s]")
+
+    plt.subplot(gs[1,0]).plot(freq, np.abs(audio_dft))
+    plt.subplot(gs[1,0]).set_title("dft(input sound)")
+    plt.subplot(gs[1,0]).set_ylabel("fft amplitude |x(freq)|")
+    plt.subplot(gs[1,0]).set_xlabel("frequency [Hz]")
+
+    sin_line, = plt.subplot(gs[0,1]).plot(time_interval, sinusoid)
+    plt.subplot(gs[0,1]).set_title("sinusoid with frequency " + str(sin_frequency) +
             "\nscalar product with input sound = " + str(scalar_product))
-    axis[0,1].set_ylabel("amplitude")
-    axis[0,1].set_xlabel("time [s]")
-    axis[1,1].specgram(audio_read, NFFT=int(window_length*frame_rate), Fs=frame_rate, noverlap=overlap*window_length/frame_rate)
-    axis[1,1].set_title("stdft(input sound)")
-    axis[1,1].set_xlabel("time [s]")
-    axis[1,1].set_ylabel("frequency [Hz]")
+    plt.subplot(gs[0,1]).set_ylabel("amplitude")
+    plt.subplot(gs[0,1]).set_xlabel("time [s]")
+
+    plt.subplot(gs[1,1]).specgram(audio_read, NFFT=int(window_length*frame_rate), Fs=frame_rate, noverlap=overlap*window_length/frame_rate)
+    plt.subplot(gs[1,1]).set_title("stdft(input sound)")
+    plt.subplot(gs[1,1]).set_xlabel("time [s]")
+    plt.subplot(gs[1,1]).set_ylabel("frequency [Hz]")
+
+    def update_spectrogram(val):
+        window_length = window_length_slider.val
+        overlap = overlap_slider.val
+        plt.subplot(gs[1,1]).specgram(audio_read, NFFT=int(window_length*frame_rate), Fs=frame_rate, noverlap=overlap*window_length/frame_rate)
+        figure.canvas.draw_idle()
+
+    def update_sinusoid(val):
+        sinusoid = np.sin(2*np.pi*freq_slider.val*time_interval)
+        scalar_product = np.dot(audio_read, sinusoid)
+        sin_line.set_ydata(sinusoid)
+        plt.subplot(gs[0,1]).set_title("sinusoid with frequency " + str(freq_slider.val) +
+            "\nscalar product with input sound = " + str(scalar_product))
+
+    #axfreq = plt.axes([0.25, 0.1, 0.65, 0.03])
+    window_length_slider = Slider(
+        ax=plt.subplot(gs[2,0]),
+        label="stdft window length [s]",
+        valmin=0.1,
+        valmax=audio_read.size/frame_rate,
+        valinit=window_length,
+    )
+    overlap_slider = Slider(
+        ax=plt.subplot(gs[2,1]),
+        label="stdft window overlap",
+        valmin=0,
+        valmax=1,
+        valinit=overlap,
+    )
+    freq_slider = Slider(
+        ax=plt.subplot(gs[3,:]),
+        label="sinusoid frequency [Hz]",
+        valmin=1,
+        valmax=50,
+        valinit=sin_frequency,
+    )
+    window_length_slider.on_changed(update_spectrogram)
+    overlap_slider.on_changed(update_spectrogram)
+    freq_slider.on_changed(update_sinusoid)
+
+    #figure.delaxes(gs[3,1])
+
     plt.show()
 
 def main():
