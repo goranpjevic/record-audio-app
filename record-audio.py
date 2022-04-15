@@ -57,8 +57,8 @@ def visualize(filename, sin_frequency, window_length, overlap):
     plt.subplot(gs[1,0]).set_xlabel("frequency [Hz]")
 
     sin_line, = plt.subplot(gs[0,1]).plot(time_interval, sinusoid)
-    plt.subplot(gs[0,1]).set_title("sinusoid with frequency " + str(sin_frequency) +
-            "\nscalar product with input sound = " + str(scalar_product))
+    plt.subplot(gs[0,1]).set_title("sinusoid with frequency " + str(sin_frequency) + " Hz\n"
+            "scalar product with input sound = " + str(scalar_product))
     plt.subplot(gs[0,1]).set_ylabel("amplitude")
     plt.subplot(gs[0,1]).set_xlabel("time [s]")
 
@@ -77,8 +77,8 @@ def visualize(filename, sin_frequency, window_length, overlap):
         sinusoid = np.sin(2*np.pi*freq_slider.val*time_interval)
         scalar_product = np.dot(audio_read, sinusoid)
         sin_line.set_ydata(sinusoid)
-        plt.subplot(gs[0,1]).set_title("sinusoid with frequency " + str(freq_slider.val) +
-            "\nscalar product with input sound = " + str(scalar_product))
+        plt.subplot(gs[0,1]).set_title("sinusoid with frequency " + str(freq_slider.val) + " Hz\n"
+            "scalar product with input sound = " + str(scalar_product))
 
     window_length_slider = Slider(
         ax=plt.subplot(gs[2,0]),
