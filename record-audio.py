@@ -62,7 +62,7 @@ def visualize(filename, sin_frequency, window_length, overlap):
     plt.subplot(gs[0,1]).set_ylabel("amplitude")
     plt.subplot(gs[0,1]).set_xlabel("time [s]")
 
-    plt.subplot(gs[1,1]).specgram(audio_read, NFFT=int(window_length*frame_rate), Fs=frame_rate, noverlap=overlap*window_length/frame_rate)
+    plt.subplot(gs[1,1]).specgram(audio_read, NFFT=int(window_length*frame_rate), Fs=frame_rate, noverlap=int(overlap*window_length*frame_rate))
     plt.subplot(gs[1,1]).set_title("stdft(input sound)")
     plt.subplot(gs[1,1]).set_xlabel("time [s]")
     plt.subplot(gs[1,1]).set_ylabel("frequency [Hz]")
@@ -70,7 +70,7 @@ def visualize(filename, sin_frequency, window_length, overlap):
     def update_spectrogram(val):
         window_length = window_length_slider.val
         overlap = overlap_slider.val
-        plt.subplot(gs[1,1]).specgram(audio_read, NFFT=int(window_length*frame_rate), Fs=frame_rate, noverlap=overlap*window_length/frame_rate)
+        plt.subplot(gs[1,1]).specgram(audio_read, NFFT=int(window_length*frame_rate), Fs=frame_rate, noverlap=int(overlap*window_length*frame_rate))
         figure.canvas.draw_idle()
 
     def update_sinusoid(val):
