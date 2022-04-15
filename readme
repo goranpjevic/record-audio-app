@@ -3,7 +3,7 @@
 app for recording and visualizing audio.
 
 usage: record-audio.py [-h] [-r RECORD] [-d DURATION] [-v VISUALIZE]
-                       [-s SIN_FREQUENCY]
+                       [-s SIN_FREQUENCY] [-w WINDOW_LENGTH] [-o OVERLAP]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -15,3 +15,7 @@ optional arguments:
                         visualize audio file
   -s SIN_FREQUENCY, --sin-frequency SIN_FREQUENCY
                         frequency of the sinusoid
+  -w WINDOW_LENGTH, --window-length WINDOW_LENGTH
+                        window length in seconds for the stdft
+  -o OVERLAP, --overlap OVERLAP
+                        window proportion overlap for the stdft
