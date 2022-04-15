@@ -91,7 +91,7 @@ def visualize(filename, sin_frequency, window_length, overlap):
         ax=plt.subplot(gs[2,1]),
         label="stdft window overlap",
         valmin=0,
-        valmax=1,
+        valmax=0.99,
         valinit=overlap,
     )
     freq_slider = Slider(
