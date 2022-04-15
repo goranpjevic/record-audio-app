@@ -98,7 +98,7 @@ def visualize(filename, sin_frequency, window_length, overlap):
         ax=plt.subplot(gs[3,:]),
         label="sinusoid frequency [Hz]",
         valmin=1,
-        valmax=50,
+        valmax=frame_rate/2,
         valinit=sin_frequency,
     )
     window_length_slider.on_changed(update_spectrogram)
