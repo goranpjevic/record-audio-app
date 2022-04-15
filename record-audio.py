@@ -83,7 +83,7 @@ def visualize(filename, sin_frequency, amplitude, window_length, overlap):
     window_length_slider = Slider(
         ax=plt.subplot(gs[2,0]),
         label="stdft window length [s]",
-        valmin=0.1,
+        valmin=0.01,
         valmax=audio_read.size/frame_rate,
         valinit=window_length,
     )
