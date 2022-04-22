@@ -2,6 +2,11 @@
 
 app for recording and visualizing audio.
 
+when visualizing an audio file, the audio is shown as well as a sinusoid, the
+dft, and the stdft.  the scalar product between the sinusoid and the sound file
+is calculated.  the stdft window length, stdft window overlap, and the sinusoid
+frequency can be adjusted with sliders.
+
 usage: record-audio.py [-h] [-r RECORD] [-d DURATION] [-v VISUALIZE]
                        [-s SIN_FREQUENCY] [-a AMPLITUDE] [-w WINDOW_LENGTH]
                        [-o OVERLAP]
